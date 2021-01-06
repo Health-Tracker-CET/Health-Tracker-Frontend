@@ -1,23 +1,51 @@
-import logo from './logo.svg';
 import './App.css';
-
+import io from 'socket.io-client';
+import Chart from 'chart.js';
+import { useEffect, useState } from 'react'
 function App() {
+  const [temp, setTemp] = useState([]);
+  useEffect(() => {
+    const ctx = document.getElementById("myChart");
+    new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: ["Temperature"],
+        datasets: [
+          {
+            label: "Body Temperature",
+            data: temp.map(data => data.bodyTemp),
+            backgroundColor: [
+              "Red",
+              "Blue",
+              "Yellow",
+              "Green",
+              "Purple",
+              "Orange"
+            ],
+            borderColor: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            borderWidth: 1
+          }
+        ]
+      }
+    });
+  });
+
+
+
+  const socket = io.connect('http://127.0.0.1:5000/');
+  
+  socket.on('Temp', (data) => {
+    const arr = temp;
+    arr.push(data);
+    setTemp(arr);
+    console.log(temp.length);
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <canvas id="myChart" width="200" height="200">
+
+      </canvas>
     </div>
   );
 }
