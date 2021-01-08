@@ -46,6 +46,7 @@ a {
     position: relative;
     z-index: 2;
     overflow: hidden;
+    text-shadow: 5px 0px 4px rgba(27,19,10,0.75);
 }
 
 .right-container::after {
