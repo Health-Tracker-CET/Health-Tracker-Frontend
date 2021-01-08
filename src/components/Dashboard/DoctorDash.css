@@ -1,0 +1,44 @@
+.doctor-page {
+    width: 100%;
+    height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.patients-container {
+    width: 800px;
+    height: 80vh;
+}
+
+.patient-header p {
+    font-size: 2rem;
+}
+
+.patient-table-header {
+    width: 100%;
+}
+
+.patient-table-header ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.patient-list {
+    width: 100%;
+}
+
+.patient-list ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+ul {
+    text-align: left;
+}
+
+ul span {
+    text-align: left;
+}
