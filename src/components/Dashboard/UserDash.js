@@ -1,4 +1,4 @@
-import '../../App.css';
+import './UserDash.css';
 import {socket} from '../../socket';
 import React, { useEffect, useState } from 'react';
 import { Line } from '@reactchartjs/react-chart.js'
@@ -13,7 +13,7 @@ const UserDash = () => {
       {
         label: 'Body Temperature',
         data: [],
-        fill: false,
+        fill: true,
         backgroundColor: 'rgb(255, 99, 132)',
         borderColor: 'rgba(255, 99, 132, 0.2)',
       },
@@ -59,6 +59,7 @@ const UserDash = () => {
         },
       ],
     },
+    maintainAspectRatio : false
   }
 
 
@@ -137,9 +138,14 @@ const UserDash = () => {
   }, [maxTemp, maxPulse]);
 
   return (
-    <div className="App">
-      <Line data={data} options={options} />
-      <Line data={pulseData} options={options}/>
+    <div className="user-page">
+      <div className="temp-graph graph">
+        <Line data={data} options={options} />
+      </div>
+      <div className="pulse-graph graph">
+        <Line data={pulseData} options={options}/>
+      </div>
+      
       <ToastContainer/>
     </div>
   )
