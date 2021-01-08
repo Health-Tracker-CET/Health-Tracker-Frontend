@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useState } from 'react';
+import './App.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,26 +16,22 @@ const LandingPage = lazy(() => import('./components/Landing'));
 const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
   return (
-    <LoginContext.Provider value={{isLoggedIn, setLoggedIn}}>
+    <LoginContext.Provider value={{ isLoggedIn, setLoggedIn }}>
       <Router forceRefresh>
-        <div>
-          <nav>
-            <ul>
+        <div className="header">
+          <nav className="nav-bar">
+            <ul className="nav-links">
               <li>
-                <Link to="/">Landing Page</Link>
+                <Link to="/"><i className="fa fa-home" aria-hidden="true"></i><span>Home</span>
+                </Link>
               </li>
               <li>
-                <Link to="/user">User Page</Link>
+                <Link to="/user"><i className="fa fa-user-circle" aria-hidden="true"></i><span>User</span></Link>
               </li>
               <li>
-                <Link to="/doctor">Doctor Page</Link>
+                <Link to="/doctor"><i className="fa fa-stethoscope" aria-hidden="true"></i><span>Doctor</span></Link>
               </li>
-              <li>
-                <Link to="/login">Login Page</Link>
-              </li>
-              <li>
-                <Link to="/register">Register Page</Link>
-              </li>
+
             </ul>
           </nav>
 
