@@ -12,12 +12,14 @@ const RegisterPage = lazy(() => import('./components/Auth/Register'));
 const UserDash = lazy(() => import('./components/Dashboard/UserDash'));
 const DoctorDash = lazy(() => import('./components/Dashboard/DoctorDash'));
 const LandingPage = lazy(() => import('./components/Landing'));
-
+const RegisterDoc = lazy(() => import('./components/Auth/RegisterDoc'));
+const LoginDoc = lazy(() => import('./components/Auth/LoginDoc'));
 const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
+  
   return (
     <LoginContext.Provider value={{ isLoggedIn, setLoggedIn }}>
-      <Router forceRefresh>
+      <Router>
         <div className="header">
           <nav className="nav-bar">
             <ul className="nav-links">
@@ -28,8 +30,15 @@ const App = () => {
               <li>
                 <Link to="/user"><i className="fa fa-user-circle" aria-hidden="true"></i><span>User</span></Link>
               </li>
-              <li>
-                <Link to="/doctor"><i className="fa fa-stethoscope" aria-hidden="true"></i><span>Doctor</span></Link>
+              <li className="doctor-dropdown">
+                <Link><i className="fa fa-stethoscope" aria-hidden="true"></i><span>Doctor</span></Link>
+                <div className="dropdown">
+                  <ul>
+                    <li><Link to="/doc-register"><span>Register</span></Link></li>
+                    <li><Link to="/doc-login"><span>Login</span></Link></li>
+                    <li><Link to="/doctor"><span>Dashboard</span></Link></li>
+                  </ul>
+                </div>
               </li>
 
             </ul>
@@ -50,6 +59,12 @@ const App = () => {
               </Route>
               <Route path="/register">
                 <RegisterPage />
+              </Route>
+              <Route path="/doc-register">
+                <RegisterDoc />
+              </Route>
+              <Route path="/doc-login">
+                <LoginDoc />
               </Route>
               <Route exact path="/">
                 <LandingPage />

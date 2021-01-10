@@ -1,32 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import './DoctorDash.css'
-
-const patientList = [
-    {
-        name : 'Adityesh',
-        email : 'adityesh@test.com',
-        age : 22,
-    },
-    {
-        name : 'Adityesh',
-        email : 'adityesh@test.com',
-        age : 22,
-    },
-    {
-        name : 'Adityesh',
-        email : 'adityesh@test.com',
-        age : 22,
-    },
-    {
-        name : 'Adityesh',
-        email : 'adityesh@test.com',
-        age : 22,
-    }
-]
-
-
+import { getUsers } from '../../utils/userActions';
 
 export default function DoctorDash() {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+        getUserList();
+    }, []);
+
+    function getUserList() {
+        getUsers(null, null)
+        .then((value) => {
+            setUsers(value)
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
+
     return(
         <div className="doctor-page">
             <div className="patients-container">
@@ -47,9 +39,9 @@ export default function DoctorDash() {
                     </ul>
                 </div>
                 <div className="patient-list">
-                    {patientList.map(patient => {
+                    {users ? users.map((patient, index) => {
                         return (
-                            <ul>
+                            <ul key={index}>
                                 <span>
                                     {patient.name}
                                 </span>
@@ -57,11 +49,11 @@ export default function DoctorDash() {
                                     {patient.email}
                                 </span>
                                 <span>
-                                    {patient.age}
+                                    {patient.age || index}
                                 </span>
                             </ul>
                         )
-                    })}
+                    }) : null}
                 </div>
             </div>
 

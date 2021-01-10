@@ -1,12 +1,16 @@
 import './UserDash.css';
 import {socket} from '../../socket';
-import React, { useEffect, useState } from 'react';
-import { Line } from '@reactchartjs/react-chart.js'
+import React, { useEffect, useState, useContext } from 'react';
+import { Line } from '@reactchartjs/react-chart.js';
+import { useHistory } from 'react-router-dom';
+import {LoginContext }from '../../context/context';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const UserDash = () => {
+  const history = useHistory();
   const [maxTemp, setMaxTemp] = useState('');
   const [maxPulse, setMaxPulse] = useState('');
+  const { isLoggedIn, setLoggedIn } = useContext(LoginContext);
   const [data, setData] = useState({
     labels: [],
     datasets: [
@@ -61,6 +65,14 @@ const UserDash = () => {
     },
     maintainAspectRatio : false
   }
+
+  useEffect(() => {
+    
+    if(!isLoggedIn) {
+      // User not logged in
+      history.push('/login');
+    }
+  }, [])
 
 
   useEffect(() => {

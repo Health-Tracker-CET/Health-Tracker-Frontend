@@ -9,7 +9,8 @@ export default function Landing() {
         <div className="landing-page">
             
             <div className="left-container">
-                <h1>Heath Tracker <i className="fa fa-medkit" aria-hidden="false"></i></h1>
+                
+                <h2>Smart Health Tracker <i className="fa fa-medkit" aria-hidden="false"></i></h2>
                 <div className="login-container">
                     <p>Log in to your account</p> 
                     <a className="horizontal"  onClick={() => history.push('/login')}><span className="text">Login</span></a>
@@ -22,9 +23,13 @@ export default function Landing() {
                  <p>Sign up for an account</p>
                  <a className="horizontal" onClick={() => history.push('/register')}><span className="text">Sign Up</span></a>
                  </div>
+                
+                
+
+                
             </div>
             <div className="right-container">
-                <h3>Landing Page for Health Tracker</h3>
+                <h3>Smart Health Tracker</h3>
             </div>
             
         </div>

@@ -173,3 +173,38 @@ input {
 }
 
 
+.form-container-doc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 500px;
+    height: 700px;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+    border-radius: 10px;
+    background: inherit;
+    margin-top: 30px;
+}
+
+.form-container-doc::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    background: inherit;
+    filter: blur(20px);
+    z-index: -1;
+    background: inherit;
+
+    box-shadow: inset 0 0 0 3000px rgba(255,255,255,0.3);
+    overflow: hidden;
+    transform: scale(1.1);
+}
+
+

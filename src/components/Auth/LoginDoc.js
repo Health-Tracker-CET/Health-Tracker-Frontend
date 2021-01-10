@@ -12,22 +12,13 @@ const LoginSchema = yup.object().shape({
     password: yup.string().required('*Password cannot be empty'),
 });
 
-export default function Login() {
+export default function LoginDoc() {
     const history = useHistory();
     const { isLoggedIn, setLoggedIn } = useContext(LoginContext);
     
     const handleLogin = (values) => {
         const {email, password} = values;
-        loginUser(email, password)
-        .then(message => {
-            console.log(message);
-            localStorage.setItem('user', JSON.stringify(message));
-            setLoggedIn(true);
-            history.push('/user');
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        console.log(values);
     }
 
     return (
@@ -54,7 +45,7 @@ export default function Login() {
 
                         <form onSubmit={handleSubmit} className="form-container">
                             <div className="head-container">
-                                <p>User Login</p>
+                                <p>Doctor Login</p>
                             </div>
                             <div className="input-container">
                                 <input type="email" onChange={handleChange('email')} value={values.email} placeholder="Enter email address" />
@@ -67,7 +58,7 @@ export default function Login() {
 
                             <div className="btn-container">
                                 
-                                <button className="btn register" onClick={() => history.push('/register')}>Sign up</button>
+                                <button className="btn register" onClick={() => history.push('/doc-register')}>Sign up</button>
                                 <button className="btn submit" type="submit">Login</button>
                                 <button className="btn reset" onClick={() => resetForm()}>Reset</button>
                             </div>
