@@ -12,10 +12,10 @@ async function loginUser(email, password) {
     console.log(response);
     if(response.error) {
         // User failed to login
-        Promise.reject(response.message);
+        return Promise.reject(response.message);
     } else {
         // Login success
-        Promise.resolve(response.message);
+        return Promise.resolve(response.message);
     }
 
 }
@@ -34,10 +34,10 @@ async function registerUser(name, email, password) {
     const response = await result.json();
     if(response.error) {
         // User failed to login
-        Promise.reject(response.message);
+        return Promise.reject(response.message);
     } else {
         // Login success
-        Promise.resolve(response.message);
+        return Promise.resolve(response.message);
     }
 }
 

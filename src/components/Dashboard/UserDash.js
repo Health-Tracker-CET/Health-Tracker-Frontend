@@ -1,13 +1,14 @@
 import './UserDash.css';
-import {socket} from '../../socket';
+import mSocket from '../../socket';
 import React, { useEffect, useState, useContext } from 'react';
 import { Line } from '@reactchartjs/react-chart.js';
-import { useHistory } from 'react-router-dom';
+import { useHistory,Router } from 'react-router-dom';
 import {LoginContext }from '../../context/context';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const UserDash = () => {
   const history = useHistory();
+  let socket;
   const [maxTemp, setMaxTemp] = useState('');
   const [maxPulse, setMaxPulse] = useState('');
   const { isLoggedIn, setLoggedIn } = useContext(LoginContext);
@@ -68,15 +69,17 @@ const UserDash = () => {
 
   useEffect(() => {
     
+    socket = mSocket();
     if(!isLoggedIn) {
       // User not logged in
-      history.push('/login');
+      console.log("I am not logged in");
+      history.replace('/login')
     }
   }, [])
 
 
   useEffect(() => {
-    
+    console.log("component mount");
     socket.on('Temp', (posts) => {
       
       const xAxis = posts.reverse().map((post) => {
@@ -134,6 +137,7 @@ const UserDash = () => {
     return () => {
       socket.removeAllListeners();
       socket.disconnect();
+      console.log("socket disconnected");
     }
   },[]);
 
