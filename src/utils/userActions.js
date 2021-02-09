@@ -1,5 +1,5 @@
 async function loginUser(email, password) {
-    const result = await fetch('http://localhost:5000/api/login-user', {
+    const result = await fetch( "https://health-tracker-cet.herokuapp.com/"+'api/login-user', {
         method : 'post',
         headers : {
             'Content-Type' : 'application/json'
@@ -22,7 +22,7 @@ async function loginUser(email, password) {
 
 
 async function registerUser(name, email, password) {
-    const result = await fetch('http://localhost:5000/api/create-user', {
+    const result = await fetch('https://health-tracker-cet.herokuapp.com/api/create-user', {
         method : 'POST',
         headers : {
             'Content-Type' : 'application/json'
@@ -42,7 +42,7 @@ async function registerUser(name, email, password) {
 }
 
 async function getUsers(name, uid) {
-        const result = await fetch('http://localhost:5000/api/get-users', {
+        const result = await fetch('https://health-tracker-cet.herokuapp.com/api/get-users', {
             method : 'post',
             headers : {
                 'Content-Type' : 'application/json'

@@ -10,6 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 const UserDash = () => {
   const history = useHistory();
   let socket;
+  const xAxis = [];
+  const yAxisTemp = [];
+  const yAxisPulse = [];
   const [maxTemp, setMaxTemp] = useState('');
   const [maxPulse, setMaxPulse] = useState('');
   let myTempChart;
@@ -100,24 +103,19 @@ const UserDash = () => {
 
     console.log("component mount");
     socket.on('Temp', (posts) => {
+      console.log(posts);
+      xAxis.push(new Date(posts.createdAt).toLocaleTimeString());
+
+      yAxisTemp.push(posts.bodyTemp);
       
-      const xAxis = posts.reverse().map((post) => {
-          
-          return new Date(post.createdAt).toLocaleTimeString();
-      })
-      const yAxis = posts.reverse().map(post => {
-        
-        return post.bodyTemp;
-      });
       let currentMaxTemp = maxTemp;
-      if(Math.max(...yAxis) >= currentMaxTemp) {
-        setMaxTemp(Math.max(...yAxis));
+      if(Math.max(...yAxisTemp) >= currentMaxTemp) {
+        setMaxTemp(Math.max(...yAxisTemp));
         
       }
 
-      const yAxisPulse = posts.reverse().map(post => {
-        return post.bodyPulse;
-      });
+      yAxisPulse.push(posts.bodyPulse);
+      
       let currentMaxPulse = maxPulse;
       if(Math.max(...yAxisPulse) >= currentMaxPulse) {
         setMaxPulse(Math.max(...yAxisPulse));
@@ -125,23 +123,19 @@ const UserDash = () => {
       
       if (myTempChart) {
         // console.log("setting data in myTempChart");
-        if (myTempChart.data.labels.length===0) {
-          myTempChart.data.labels.push(...xAxis)
-        } else {
-          myTempChart.data.labels.push(xAxis[9]);
-          myTempChart.data.labels.shift();
-  
+        if (myTempChart.data.labels.length === 10) {
+          myTempChart.data.labels.shift();  
         }
+
+        myTempChart.data.labels.push(xAxis[xAxis.length-1]);
+          
         
 
         myTempChart.data.datasets.forEach(dataset => {
-          if (dataset.data.length===0) {
-            dataset.data.push(...yAxis);
-            
-          } else {
-            dataset.data.push(yAxis[9]);
-            dataset.data.shift();  
-          }
+          if (dataset.data.length===10) {
+            dataset.data.shift();
+          } 
+          dataset.data.push(yAxisTemp[yAxisTemp.length-1]);
           
         });
         myTempChart.update();  
@@ -149,23 +143,19 @@ const UserDash = () => {
 
       if (myPulseChart) {
         // console.log("setting data in myPulseChart");
-        if (myPulseChart.data.labels.length===0) {
-          myPulseChart.data.labels.push(...xAxis)
-        } else {
-          myPulseChart.data.labels.push(xAxis[9]);
-          myPulseChart.data.labels.shift();
-  
+        if (myPulseChart.data.labels.length === 10) {
+          myPulseChart.data.labels.shift();  
         }
+
+        myPulseChart.data.labels.push(xAxis[xAxis.length-1]);
+          
         
 
         myPulseChart.data.datasets.forEach(dataset => {
-          if (dataset.data.length===0) {
-            dataset.data.push(...yAxisPulse);
-            
-          } else {
-            dataset.data.push(yAxisPulse[9]);
-            dataset.data.shift();  
-          }
+          if (dataset.data.length===10) {
+            dataset.data.shift();
+          } 
+          dataset.data.push(yAxisPulse[yAxisPulse.length-1]);
           
         });
         myPulseChart.update();  
@@ -176,7 +166,7 @@ const UserDash = () => {
         datasets: [
           {
             label: 'Body Temperature',
-            data: yAxis,
+            data: yAxisTemp,
             fill: false,
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgba(255, 99, 132, 0.2)',
